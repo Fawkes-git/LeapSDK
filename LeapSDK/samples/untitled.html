@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://js.leapmotion.com/leap-0.6.4.min.js"></script>
+<script src="https://js.leapmotion.com/leap-plugins-0.1.12.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script>
+$(function(){
+ var myCanvas = document.getElementById("myCanvas");
+ var ctx = myCanvas.getContext("2d");
+ var w =1280; var h= 800;
+ var imgW = 206; var imgH = 240;
+ var imageIds = ["#kikai","#jyoho","#denshi","#kagaku","#robo","#kennchiku"];
+ var imageIds2 = ["#kikai2","#jyoho2","#denshi2","#kagaku2","#robo2","#kennchiku2"];
+ Leap.loop(function(frame){
+ if(!frame.pointables.length) return;
+ ctx.clearRect(0, 0, w, h);
+ for(var hi = 0; hi < frame.hands.length; hi++){
+ var hand = frame.hands[hi];
+ var pointables = hand.pointables;
+ for( var pi=0; pi < pointables.length; pi++){
+ var pointable = pointables[pi];
+ var tip = pointable.tipPosition;
+ if(!tip) return;
+ showTekutamaAtTip(tip, hi, pi);
+ }
+ }
+ });
+});
